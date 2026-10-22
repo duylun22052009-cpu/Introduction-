@@ -1,644 +1,345 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio cá nhân - giới thiệu bản thân, sở thích, mục tiêu và dự án.">
-    <title>Portfolio cá nhân | Học sinh lớp 12</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Duy Dang · Student, curious mind, future engineer</title>
+<meta name="description" content="Duy Dang, học sinh THPT Trần Phú, TP. Hồ Chí Minh. Tò mò về toán học, lập trình, vi mạch và kỹ thuật.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Duy Dang">
+<meta property="og:description" content="Student · Curious mind · Future engineer">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Ctext x='32' y='43' font-size='30' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3EDD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Be Vietnam Pro: được thiết kế cho tiếng Việt. Nếu không tải được sẽ dùng font hệ thống. -->
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ===== 1. TOKENS: đổi màu, cỡ chữ, khoảng cách tại đây ===== */
+:root{
+  --bg:#fff; --fg:#0a0a0a; --mut:#666; --line:#e4e4e4; --soft:#f4f4f4;
+  --dbg:#0a0a0a; --dfg:#f5f5f5; --dmut:#a6a6a6; --dline:#2a2a2a;
+  --gut:clamp(1.25rem,5vw,3rem); --pad:clamp(5rem,13vw,10rem);
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --font:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.65;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid currentColor;outline-offset:4px;border-radius:2px}
+.wrap{max-width:1080px;margin:0 auto}
+section{padding:var(--pad) var(--gut)}
+h2{font-weight:800;letter-spacing:-.03em;line-height:1.08;font-size:clamp(1.9rem,6vw,3.6rem);max-width:18ch}
+.dark{background:var(--dbg);color:var(--dfg)}
+.dark .mut{color:var(--dmut)}
+.mut{color:var(--mut)}
 
-    <style>
-        /* ===== 1. THIẾT LẬP CHUNG ===== */
-        :root {
-            --background: #0b1020;
-            --surface: #121a2e;
-            --surface-light: #1a2540;
-            --text: #f3f6ff;
-            --muted: #aab5cf;
-            --accent: #7c9cff;
-            --accent-2: #63e6be;
-            --border: rgba(255, 255, 255, 0.12);
-        }
+/* ===== 2. CHROME TỐI GIẢN: thanh tiến trình + nút đổi ngôn ngữ ===== */
+.bar{position:fixed;inset:0 0 auto 0;height:2px;background:var(--fg);transform:scaleX(0);transform-origin:0 50%;z-index:30;mix-blend-mode:difference}
+.lang{position:fixed;top:max(.9rem,env(safe-area-inset-top));right:var(--gut);z-index:30;min-width:44px;min-height:44px;padding:0 1rem;border:1px solid currentColor;border-radius:99px;background:rgba(255,255,255,.85);color:#0a0a0a;font:600 .85rem var(--font);cursor:pointer;transition:background .2s,color .2s}
+.lang:hover{background:#0a0a0a;color:#fff}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+/* ===== 3. HERO ===== */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(1.2rem,4vh,2.5rem);padding:5.5rem var(--gut) 5rem;overflow:hidden;text-align:center}
+.layer{position:absolute;inset:0;margin:auto;pointer-events:none;will-change:transform}
+.ring{border:1px solid var(--line);border-radius:50%}
+.r1{width:min(130vw,980px);height:min(130vw,980px)}
+.r2{width:min(86vw,640px);height:min(86vw,640px);border-color:#d2d2d2}
+.gridbg{width:100%;height:100%;background-image:linear-gradient(var(--soft) 1px,transparent 1px),linear-gradient(90deg,var(--soft) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(circle at 50% 55%,#000,transparent 65%);mask-image:radial-gradient(circle at 50% 55%,#000,transparent 65%)}
+.hero-top{position:relative;z-index:2;will-change:transform,opacity}
+.name{font-weight:800;letter-spacing:-.055em;line-height:.9;font-size:clamp(3.6rem,17vw,11.5rem)}
+.tag{margin-top:1.1rem;font-weight:300;color:var(--mut);font-size:clamp(.95rem,2.6vw,1.3rem);letter-spacing:.01em}
+.portrait{position:relative;z-index:1;width:min(64vw,340px);aspect-ratio:4/5;will-change:transform}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom}
+.ph{position:absolute;inset:0;display:grid;place-items:center;border-radius:999px 999px 18px 18px;background:linear-gradient(#f1f1f1,#fafafa);border:1px solid var(--line)}
+.ph svg{width:70%;height:auto;color:#cfcfcf}
+.ph b{position:absolute;bottom:14%;font-weight:800;font-size:clamp(2rem,8vw,3rem);letter-spacing:-.05em;color:#bdbdbd}
+.has-img .ph{display:none}
+.cue{position:absolute;bottom:1.4rem;left:50%;margin-left:-22px;width:44px;height:44px;display:grid;place-items:center;text-decoration:none;z-index:2}
+.cue span{display:block;width:1px;height:34px;background:var(--fg);transform-origin:top;animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{0%{transform:scaleY(0)}60%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
 
-        html {
-            scroll-behavior: smooth;
-        }
+/* ===== 4. ABOUT ===== */
+.about h2{max-width:20ch;font-size:clamp(2.2rem,8vw,5.2rem)}
+.about .lines{margin-top:clamp(2.5rem,7vw,5rem);display:grid;gap:1.6rem;max-width:34rem;margin-left:auto}
+.about .lines p{font-size:clamp(1.05rem,2.4vw,1.3rem);font-weight:300}
+.about .lines p:first-child{font-weight:600}
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: var(--background);
-            color: var(--text);
-            line-height: 1.7;
-        }
+/* ===== 5. PERSONALITY: danh sách typographic, không dùng card ===== */
+.traits{margin-top:clamp(2.5rem,6vw,4rem);border-bottom:1px solid var(--line)}
+.trait{display:grid;gap:.4rem 2rem;padding:1.6rem 0;border-top:1px solid var(--line);transition:padding-left .5s var(--ease)}
+.trait h3{font-weight:800;letter-spacing:-.04em;line-height:1;font-size:clamp(2rem,7vw,3.8rem)}
+.trait p{color:var(--mut);max-width:34rem;align-self:end}
+@media(hover:hover){.trait:hover{padding-left:1rem}}
+@media(min-width:760px){.trait{grid-template-columns:1fr 1fr;align-items:end}}
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+/* ===== 6. LEARNING ===== */
+.learn .intro{margin-top:1.5rem;max-width:36rem;color:var(--mut);font-size:1.08rem}
+.topics{margin-top:clamp(3rem,7vw,5rem);display:grid;gap:clamp(2.5rem,6vw,4rem)}
+.topic{display:grid;gap:.6rem;max-width:30rem;padding-left:1.2rem;border-left:2px solid var(--fg)}
+.topic h3{font-size:clamp(1.3rem,3.4vw,1.8rem);font-weight:600;letter-spacing:-.02em;line-height:1.25}
+.topic p{color:var(--mut)}
+@media(min-width:760px){.topic:nth-child(even){margin-left:auto}}
 
-        .container {
-            width: min(1100px, 90%);
-            margin: 0 auto;
-        }
+/* ===== 7. INTERESTS (nền đen để tạo nhịp tương phản) ===== */
+.cols{margin-top:clamp(3rem,7vw,5rem);display:grid;gap:clamp(3rem,6vw,4rem)}
+.col svg{width:100%;max-width:260px;height:auto;display:block;margin-bottom:1.5rem;color:var(--dfg)}
+.col h3{font-size:clamp(2rem,5vw,2.8rem);font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:.8rem}
+.col p{color:var(--dmut);max-width:22rem}
+.draw *{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.draw .dot{fill:currentColor;stroke:none}
+@media(min-width:820px){.cols{grid-template-columns:repeat(3,1fr);gap:3rem}}
 
-        .section {
-            padding: 80px 0;
-            scroll-margin-top: 85px;
-        }
+/* ===== 8. GOALS ===== */
+.goals{position:relative;overflow:hidden}
+.goals .big{position:absolute;right:-6vw;top:8%;font-weight:800;font-size:clamp(14rem,48vw,38rem);line-height:.8;letter-spacing:-.08em;color:transparent;-webkit-text-stroke:1px var(--line);user-select:none;pointer-events:none;will-change:transform}
+.goals .wrap{position:relative}
+.goal-list{margin-top:clamp(2.5rem,6vw,4rem);display:grid;gap:clamp(1.4rem,3.5vw,2.4rem)}
+.goal-list p{font-weight:600;letter-spacing:-.03em;line-height:1.2;font-size:clamp(1.5rem,4.8vw,2.9rem);max-width:22ch}
+.goals .note{margin-top:3rem;color:var(--mut);font-weight:300}
 
-        .section-heading {
-            margin-bottom: 30px;
-        }
+/* ===== 9. PROJECTS + CONTACT ===== */
+.projects{background:var(--soft)}
+.projects p{margin-top:1.6rem;max-width:34rem;color:var(--mut);font-size:1.08rem}
+.contact{text-align:center}
+.contact h2{margin:0 auto;max-width:12ch;font-size:clamp(2.6rem,10vw,6.5rem)}
+.contact p{margin:1.6rem auto 0;max-width:30rem;color:var(--mut);font-size:1.08rem}
+.contact .loc{margin-top:2rem;font-weight:600;color:var(--fg)}
+footer{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;padding:1.5rem var(--gut);border-top:1px solid var(--line);font-size:.9rem;color:var(--mut)}
+footer a,footer button{min-height:44px;display:inline-flex;align-items:center;padding:0 .2rem;background:none;border:0;font:inherit;color:var(--fg);cursor:pointer;text-decoration:underline;text-underline-offset:4px}
 
-        .eyebrow {
-            color: var(--accent-2);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
+/* ===== 10. SCROLL REVEAL: chỉ bật khi JS chạy (không JS vẫn đọc được) ===== */
+.js .rv,.js .rvx,.js .rvz{opacity:0;transition:opacity .9s var(--ease) var(--d,0s),transform 1.1s var(--ease) var(--d,0s)}
+.js .rv{transform:translateY(28px)}
+.js .rvx{transform:translateX(-36px)}
+.js .rvz{transform:scale(.94)}
+.js .in{opacity:1;transform:none}
+.js .draw *{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s var(--ease) .2s}
+.js .in .draw *,.js .draw.in *{stroke-dashoffset:0}
+.js .intro-seq{animation:seq 1.2s var(--ease) both}
+@keyframes seq{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
-        h2 {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            line-height: 1.25;
-            margin-top: 8px;
-        }
-
-        .section-description {
-            color: var(--muted);
-            max-width: 680px;
-            margin-top: 12px;
-        }
-
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 24px;
-        }
-
-        /* ===== 2. THANH ĐIỀU HƯỚNG ===== */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: rgba(11, 16, 32, 0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .navbar {
-            min-height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .logo {
-            font-size: 1.1rem;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        .logo span {
-            color: var(--accent-2);
-        }
-
-        .nav-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--muted);
-            font-size: 0.92rem;
-            transition: color 0.2s ease;
-        }
-
-        .nav-links a:hover,
-        .nav-links a:focus {
-            color: var(--accent-2);
-        }
-
-        /* ===== 3. TRANG CHỦ ===== */
-        .hero {
-            min-height: 78vh;
-            display: flex;
-            align-items: center;
-            padding: 70px 0;
-            background:
-                radial-gradient(circle at 85% 20%, rgba(124, 156, 255, 0.17), transparent 30%),
-                radial-gradient(circle at 10% 90%, rgba(99, 230, 190, 0.10), transparent 28%);
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.4fr 0.8fr;
-            align-items: center;
-            gap: 55px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            line-height: 1.08;
-            margin: 14px 0 20px;
-        }
-
-        .hero h1 span {
-            color: var(--accent);
-        }
-
-        .hero p {
-            color: var(--muted);
-            max-width: 600px;
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-top: 28px;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 12px 19px;
-            border-radius: 10px;
-            font-weight: bold;
-            border: 1px solid var(--border);
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-
-        .button-primary {
-            color: #0b1020;
-            background: var(--accent-2);
-            border-color: var(--accent-2);
-        }
-
-        .button-secondary {
-            background: var(--surface);
-        }
-
-        /* Khung ảnh minh họa: thay bằng ảnh của bạn khi cần */
-        .profile-placeholder {
-            min-height: 330px;
-            border: 1px dashed rgba(255, 255, 255, 0.3);
-            border-radius: 28px;
-            background: linear-gradient(145deg, var(--surface-light), var(--surface));
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 30px;
-        }
-
-        .profile-icon {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            font-size: 3rem;
-            background: rgba(124, 156, 255, 0.15);
-            border: 1px solid var(--border);
-            margin-bottom: 18px;
-        }
-
-        .profile-placeholder p {
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-
-        /* ===== 4. GIỚI THIỆU VÀ HỌC TẬP ===== */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 22px;
-        }
-
-        .card h3 {
-            margin-bottom: 10px;
-            font-size: 1.15rem;
-        }
-
-        .card p,
-        .card li {
-            color: var(--muted);
-        }
-
-        .info-list {
-            list-style: none;
-        }
-
-        .info-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .info-list li:last-child {
-            border-bottom: none;
-        }
-
-        /* ===== 5. SỞ THÍCH ===== */
-        .hobby-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-
-        .hobby-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 22px 16px;
-            text-align: center;
-        }
-
-        .hobby-card .emoji {
-            font-size: 2rem;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .hobby-card h3 {
-            font-size: 1rem;
-        }
-
-        /* ===== 6. MỤC TIÊU ===== */
-        .goal-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
-        }
-
-        .goal-card {
-            border-left: 3px solid var(--accent-2);
-        }
-
-        .goal-card h3 {
-            margin-bottom: 8px;
-        }
-
-        /* ===== 7. THÀNH TÍCH VÀ DỰ ÁN ===== */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .project-label {
-            display: inline-block;
-            color: var(--accent-2);
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-        }
-
-        /* ===== 8. LIÊN HỆ ===== */
-        .contact-card {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .contact-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .contact-links a {
-            color: var(--accent-2);
-            overflow-wrap: anywhere;
-        }
-
-        footer {
-            padding: 25px 0;
-            text-align: center;
-            color: var(--muted);
-            border-top: 1px solid var(--border);
-            font-size: 0.9rem;
-        }
-
-        /* ===== 9. HIỂN THỊ TRÊN MÀN HÌNH NHỎ ===== */
-        @media (max-width: 800px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 35px;
-            }
-
-            .profile-placeholder {
-                min-height: 250px;
-            }
-
-            .hobby-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .navbar {
-                padding: 15px 0;
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .nav-links {
-                gap: 10px 16px;
-            }
-        }
-
-        @media (max-width: 560px) {
-            .section {
-                padding: 58px 0;
-            }
-
-            .about-grid,
-            .goal-grid,
-            .project-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                min-height: auto;
-            }
-
-            .hobby-card {
-                padding: 18px 10px;
-            }
-        }
-    </style>
+/* ===== 11. GIẢM CHUYỂN ĐỘNG: nội dung và bố cục vẫn đầy đủ ===== */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .rv,.js .rvx,.js .rvz{opacity:1;transform:none;transition:none}
+  .js .draw *{stroke-dashoffset:0;transition:none}
+  .js .intro-seq,.cue span{animation:none}
+  .cue span{transform:none}
+  .trait{transition:none}
+}
+</style>
 </head>
-
 <body>
-    <!-- ===== THANH ĐIỀU HƯỚNG ===== -->
-    <header>
-        <nav class="navbar container" aria-label="Điều hướng chính">
-            <!-- TÙY CHỈNH: sửa tên viết tắt hoặc tên cá nhân tại đây -->
-            <a class="logo" href="#home">MY<span>PORTFOLIO</span></a>
+<div class="bar" id="bar" aria-hidden="true"></div>
+<button class="lang" id="lang" type="button" aria-label="Switch to English">EN</button>
 
-            <ul class="nav-links">
-                <li><a href="#about">Giới thiệu</a></li>
-                <li><a href="#education">Học tập</a></li>
-                <li><a href="#hobbies">Sở thích</a></li>
-                <li><a href="#goals">Mục tiêu</a></li>
-                <li><a href="#achievements">Thành tích</a></li>
-                <li><a href="#contact">Liên hệ</a></li>
-            </ul>
-        </nav>
-    </header>
+<main>
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="layer" data-speed="0.14" aria-hidden="true"><div class="gridbg"></div></div>
+  <div class="layer ring r1" data-speed="-0.06" aria-hidden="true"></div>
+  <div class="layer ring r2" data-speed="0.05" aria-hidden="true"></div>
 
-    <main>
-        <!-- ===== TRANG CHỦ ===== -->
-        <section class="hero" id="home">
-            <div class="container hero-grid">
-                <div>
-                    <p class="eyebrow">Xin chào! Chào mừng đến với portfolio của tôi</p>
+  <div class="hero-top intro-seq" data-fade data-speed="-0.12">
+    <h1 class="name">Duy Dang</h1>
+    <p class="tag">Student · Curious mind · Future engineer</p>
+  </div>
 
-                    <!-- TÙY CHỈNH: thay [Tên của bạn] bằng tên muốn hiển thị -->
-                    <h1>I am <span>Duy Dang</span>.</h1>
+  <!-- Ảnh chân dung: đặt ảnh PNG đã tách nền tại assets/images/portrait.png.
+       Chưa có ảnh thì khung phía sau tự hiển thị, không lộ ảnh lỗi. -->
+  <figure class="portrait intro-seq" id="portrait" data-speed="-0.03" style="animation-delay:.25s">
+    <div class="ph" aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1"><circle cx="100" cy="100" r="92"/><circle cx="100" cy="100" r="64"/><circle cx="100" cy="100" r="36"/><path d="M8 100h184M100 8v184"/></svg>
+      <b>DD</b>
+    </div>
+    <img id="portraitImg" src="assets/images/portrait.png" alt="Chân dung Duy Dang" width="800" height="1000" decoding="async">
+  </figure>
 
-                    <p>
-                        Tôi là học sinh lớp 12, yêu thích khám phá kiến thức,
-                        thử thách bản thân và tìm hiểu cách thế giới vận hành.
-                        Đây là nơi tôi chia sẻ về bản thân, sở thích, mục tiêu
-                        và những điều mình đã thực hiện.
-                    </p>
+  <a class="cue" href="#about" aria-label="Cuộn xuống" data-en-label="Scroll down"><span></span></a>
+</header>
 
-                    <div class="hero-actions">
-                        <a class="button button-primary" href="#about">Tìm hiểu về tôi</a>
-                        <a class="button button-secondary" href="#contact">Kết nối với tôi</a>
-                    </div>
-                </div>
+<!-- ===== ABOUT ===== -->
+<section class="about" id="about" aria-labelledby="t-about">
+  <div class="wrap">
+    <h2 id="t-about" class="rv" data-en="I understand how everything works. Just not you.">Hiểu cách mọi thứ vận hành nhưng chưa hiểu được em.</h2>
+    <div class="lines">
+      <p class="rvx" data-en="I like opening things up and asking: why does this work?">Mình thích mở một thứ ra và hỏi: vì sao nó chạy được?</p>
+      <p class="rvx" style="--d:.15s" data-en="A proof, a line of code, a chip. Each one is a puzzle with an answer waiting to be found.">Một phép chứng minh, một dòng code, một con chip. Mỗi thứ là một câu đố có lời giải đang chờ được tìm ra.</p>
+      <p class="rvx mut" style="--d:.3s" data-en="There is still so much I don’t know. Maybe that’s why I keep going.">Vẫn còn rất nhiều điều mình chưa biết. Có lẽ vì thế mà mình chưa dừng lại.</p>
+    </div>
+  </div>
+</section>
 
-                <!-- TÙY CHỈNH: có thể thay khung này bằng thẻ <img> -->
-                <div class="profile-placeholder">
-                    <div class="profile-icon" aria-hidden="true">👋</div>
-                    <h2>Ảnh đại diện</h2>
-                    <p>Thay khu vực này bằng ảnh của bạn nếu muốn.</p>
-                </div>
-            </div>
-        </section>
+<!-- ===== PERSONALITY ===== -->
+<section id="personality" aria-labelledby="t-pers">
+  <div class="wrap">
+    <h2 id="t-pers" class="rv" data-en="A few things about how I think">Một vài điều về cách mình nghĩ</h2>
+    <div class="traits">
+      <div class="trait rv"><h3 data-en="Logic">Logic</h3><p data-en="I like things with clear reasons, and I believe most problems can be broken down and solved.">Mình thích mọi thứ có lý do rõ ràng, và tin rằng phần lớn vấn đề có thể chia nhỏ để giải.</p></div>
+      <div class="trait rv"><h3 data-en="Curious">Ham khám phá</h3><p data-en="When I meet something I don’t understand, I want to see how it works before I accept it.">Gặp điều chưa hiểu, mình muốn biết nó hoạt động ra sao trước khi chấp nhận nó.</p></div>
+      <div class="trait rv"><h3 data-en="Creative">Sáng tạo</h3><p data-en="For the same problem, I try to find one more way of looking at it.">Cùng một bài toán, mình luôn thử tìm thêm một cách nhìn khác.</p></div>
+      <div class="trait rv"><h3 data-en="Energetic">Năng động</h3><p data-en="Football, cycling and running keep me moving after long hours of thinking.">Bóng đá, đạp xe và chạy bộ giúp mình giữ nhịp sau những giờ ngồi suy nghĩ.</p></div>
+      <div class="trait rv"><h3 data-en="Disciplined">Kỷ luật</h3><p data-en="I believe progress comes from small things done steadily, every day.">Mình tin tiến bộ đến từ những việc nhỏ làm đều đặn mỗi ngày.</p></div>
+      <div class="trait rv"><h3 data-en="Calm">Điềm tĩnh</h3><p data-en="When a problem gets hard, I slow down and look closer instead of rushing.">Khi bài toán khó, mình chậm lại và nhìn kỹ hơn thay vì vội vàng.</p></div>
+    </div>
+  </div>
+</section>
 
-        <!-- ===== GIỚI THIỆU ===== -->
-        <section class="section" id="about">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow">About me</p>
-                    <h2>Đôi nét về bản thân</h2>
-                    <p class="section-description">
-                        Tôi tin rằng mỗi trải nghiệm đều là cơ hội để học hỏi,
-                        phát triển tư duy và hiểu rõ hơn về bản thân.
-                    </p>
-                </div>
+<!-- ===== LEARNING ===== -->
+<section class="learn" id="learning" aria-labelledby="t-learn">
+  <div class="wrap">
+    <h2 id="t-learn" class="rv" data-en="Learning, still exploring">Đang học, đang tìm hiểu</h2>
+    <p class="intro rv" data-en="I’m studying at Tran Phu High School in Ho Chi Minh City. These are the areas I’m learning, not ones I’ve mastered.">Mình đang học tại THPT Trần Phú, TP. Hồ Chí Minh. Đây là những lĩnh vực mình đang học hỏi, chưa phải điều mình đã thành thạo.</p>
+    <div class="topics">
+      <article class="topic rvx"><h3 data-en="Mathematics and logical thinking">Toán học và tư duy logic</h3><p data-en="Where I practise careful reasoning: state assumptions, test them, and accept when I’m wrong.">Nơi mình luyện cách suy luận chặt chẽ: đặt giả thiết, kiểm tra, và chấp nhận khi mình sai.</p></article>
+      <article class="topic rvx"><h3 data-en="Programming">Lập trình</h3><p data-en="Turning ideas into steps a computer can follow, and learning to hunt bugs calmly.">Biến ý tưởng thành các bước máy tính có thể làm theo, và học cách tìm lỗi một cách bình tĩnh.</p></article>
+      <article class="topic rvx"><h3 data-en="Microchips and semiconductors">Vi mạch và bán dẫn</h3><p data-en="Curious how tiny components can process information. I’m starting from the fundamentals.">Tò mò về cách những linh kiện rất nhỏ có thể xử lý thông tin. Mình đang bắt đầu từ các khái niệm nền tảng.</p></article>
+      <article class="topic rvx"><h3 data-en="Engineering and systems">Kỹ thuật và hệ thống</h3><p data-en="Seeing a device as parts working together, then asking what each part does.">Nhìn một thiết bị như tập hợp các phần phối hợp với nhau, rồi hỏi từng phần làm gì.</p></article>
+    </div>
+  </div>
+</section>
 
-                <div class="about-grid">
-                    <article class="card">
-                        <h3>Xin chào, tôi là...</h3>
-                        <!-- TÙY CHỈNH: viết lại đoạn giới thiệu theo cá tính của bạn -->
-                        <p>
-                            Tôi là một học sinh trung học phổ thông đang trong
-                            quá trình khám phá những lĩnh vực mình yêu thích.
-                            Tôi quan tâm đến việc học hỏi, tư duy logic và vận
-                            dụng kiến thức vào thực tế.
-                        </p>
-                    </article>
+<!-- ===== INTERESTS ===== -->
+<section class="dark" id="interests" aria-labelledby="t-int">
+  <div class="wrap">
+    <h2 id="t-int" class="rv" data-en="Think, build, move">Nghĩ, làm, vận động</h2>
+    <div class="cols">
+      <div class="col rvz">
+        <svg class="draw" viewBox="0 0 200 140" aria-hidden="true"><path pathLength="1" d="M20 110 L70 40 L120 80 L180 20"/><path pathLength="1" d="M20 125h160M20 125V15"/><circle class="dot" cx="70" cy="40" r="3.5"/><circle class="dot" cx="120" cy="80" r="3.5"/><circle class="dot" cx="180" cy="20" r="3.5"/></svg>
+        <h3>THINK</h3><p data-en="Mathematics, logic and problem solving. Where everything starts with a question.">Toán học, logic và giải quyết vấn đề. Nơi mọi thứ bắt đầu bằng một câu hỏi.</p>
+      </div>
+      <div class="col rvz" style="--d:.15s">
+        <svg class="draw" viewBox="0 0 200 140" aria-hidden="true"><rect pathLength="1" x="70" y="40" width="60" height="60" rx="4"/><path pathLength="1" d="M85 40V15H20M100 40V10M115 40V25h65M130 70h50M130 85h30v35h20M70 70H20M70 85H35v35H15M85 100v25h-40M115 100v30"/><circle class="dot" cx="20" cy="15" r="3"/><circle class="dot" cx="180" cy="25" r="3"/><circle class="dot" cx="180" cy="120" r="3"/></svg>
+        <h3>BUILD</h3><p data-en="Programming, microchips and engineering. Where ideas meet reality.">Lập trình, vi mạch và kỹ thuật. Nơi ý tưởng được thử với thực tế.</p>
+      </div>
+      <div class="col rvz" style="--d:.3s">
+        <svg class="draw" viewBox="0 0 200 140" aria-hidden="true"><path pathLength="1" d="M10 120C50 120 50 30 100 30S150 110 190 110"/><path pathLength="1" d="M10 130h180" opacity=".5"/><circle class="dot" cx="100" cy="30" r="3.5"/><circle class="dot" cx="190" cy="110" r="3.5"/></svg>
+        <h3>MOVE</h3><p data-en="Football, cycling and running. Where the mind rests and the body speaks.">Đá bóng, đạp xe và chạy bộ. Nơi đầu óc được nghỉ và cơ thể lên tiếng.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-                    <article class="card">
-                        <h3>Thông tin cơ bản</h3>
-                        <ul class="info-list">
-                            <li><strong>Họ tên:</strong> Đặng Lê Minh Duy</li>
-                            <li><strong>Lớp:</strong> 12</li>
-                            <li><strong>Trường:</strong> THPT Trần Phú</li>
-                            <li><strong>Lĩnh vực quan tâm:</strong> Toán học, Vật lí, Công nghệ</li>
-                        </ul>
-                    </article>
-                </div>
-            </div>
-        </section>
+<!-- ===== GOALS ===== -->
+<section class="goals" id="goals" aria-labelledby="t-goal">
+  <div class="big" data-speed="0.18" aria-hidden="true">?</div>
+  <div class="wrap">
+    <h2 id="t-goal" class="rv" data-en="Where I’m heading">Hướng đi phía trước</h2>
+    <div class="goal-list">
+      <p class="rvx" data-en="Understand the principles, not just use the tools.">Hiểu sâu nguyên lý, không chỉ biết dùng công cụ.</p>
+      <p class="rvx" data-en="Grow my programming and problem-solving.">Rèn khả năng lập trình và giải quyết vấn đề.</p>
+      <p class="rvx" data-en="Explore how software, hardware and engineering connect.">Khám phá mối liên hệ giữa phần mềm, phần cứng và kỹ thuật.</p>
+      <p class="rvx" data-en="Turn knowledge into things people can actually use.">Biến kiến thức thành sản phẩm có thể dùng được.</p>
+    </div>
+    <p class="note rv" data-en="These are directions I’m working toward, not things already done.">Đây là những điều mình đang hướng tới, chưa phải điều đã hoàn thành.</p>
+  </div>
+</section>
 
-        <!-- ===== HỌC TẬP ===== -->
-        <section class="section" id="education">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow">Education</p>
-                    <h2>Hành trình học tập</h2>
-                    <p class="section-description">
-                        Những kiến thức và kỹ năng tôi đang tích lũy trên hành trình trưởng thành.
-                    </p>
-                </div>
+<!-- ===== PROJECTS: chưa có dữ liệu dự án thật nên không tạo card hay liên kết giả ===== -->
+<section class="projects" id="projects" aria-labelledby="t-proj">
+  <div class="wrap">
+    <h2 id="t-proj" class="rv" data-en="Projects">Dự án</h2>
+    <p class="rv" data-en="Projects will appear here once they’re clear enough to share, with real goals, roles and status. None have been published yet.">Các dự án sẽ xuất hiện ở đây khi đủ rõ ràng để chia sẻ, kèm mục tiêu, vai trò và trạng thái thật. Hiện chưa có dự án nào được công bố.</p>
+  </div>
+</section>
 
-                <article class="card">
-                    <h3>Trung học phổ thông</h3>
-                    <p><strong>Trường:</strong> THPT Trần Phú</p>
-                    <p><strong>Lớp:</strong> 12</p>
-                    <p>
-                        Tôi chú trọng phát triển tư duy logic, khả năng tự học,
-                        làm việc nhóm và trình bày ý tưởng. Tôi cũng đang tìm hiểu
-                        thêm về lập trình và ứng dụng công nghệ.
-                    </p>
-                </article>
-            </div>
-        </section>
+<!-- ===== CONTACT: chưa có email/mạng xã hội thật nên chỉ giữ lời mời ===== -->
+<section class="contact" id="contact" aria-labelledby="t-contact">
+  <div class="wrap">
+    <h2 id="t-contact" class="rv" data-en="Let’s talk">Cùng trao đổi</h2>
+    <p class="rv" data-en="I’m always glad to exchange knowledge and hear new ideas.">Mình luôn vui khi được trao đổi kiến thức và nghe những ý tưởng mới.</p>
+    <p class="loc rv" data-en="Ho Chi Minh City, Vietnam">TP. Hồ Chí Minh, Việt Nam</p>
+  </div>
+</section>
+</main>
 
-        <!-- ===== SỞ THÍCH ===== -->
-        <section class="section" id="hobbies">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow">Interests</p>
-                    <h2>Những điều tôi yêu thích</h2>
-                    <p class="section-description">
-                        Sự kết hợp giữa khám phá tri thức, vận động và trải nghiệm mới.
-                    </p>
-                </div>
+<footer>
+  <span>© <span id="year">2026</span> Duy Dang</span>
+  <a href="#top" data-en="Back to top">Về đầu trang</a>
+</footer>
 
-                <div class="hobby-grid">
-                    <article class="hobby-card">
-                        <span class="emoji" aria-hidden="true">📐</span>
-                        <h3>Toán học</h3>
-                    </article>
-                    <article class="hobby-card">
-                        <span class="emoji" aria-hidden="true">⚽</span>
-                        <h3>Đá bóng</h3>
-                    </article>
-                    <article class="hobby-card">
-                        <span class="emoji" aria-hidden="true">♟️</span>
-                        <h3>Cờ vua</h3>
-                    </article>
-                    <article class="hobby-card">
-                        <span class="emoji" aria-hidden="true">🚲</span>
-                        <h3>Đạp xe</h3>
-                    </article>
-                    <article class="hobby-card">
-                        <span class="emoji" aria-hidden="true">🌍</span>
-                        <h3>Du lịch</h3>
-                    </article>
-                    <article class="hobby-card">
-                        <span class="emoji" aria-hidden="true">🎤</span>
-                        <h3>Thuyết trình</h3>
-                    </article>
-                    <article class="hobby-card">
-                        <span class="emoji" aria-hidden="true">⚛️</span>
-                        <h3>Vật lí</h3>
-                    </article>
-                    <article class="hobby-card">
-                        <span class="emoji" aria-hidden="true">🧪</span>
-                        <h3>Thí nghiệm</h3>
-                    </article>
-                </div>
-            </div>
-        </section>
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js"); // bật các trạng thái ẩn của reveal (không JS thì nội dung vẫn hiện)
 
-        <!-- ===== MỤC TIÊU ===== -->
-        <section class="section" id="goals">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow">Goals</p>
-                    <h2>Mục tiêu của tôi</h2>
-                    <p class="section-description">
-                        <!-- TÙY CHỈNH: sửa các mục tiêu dưới đây cho đúng với bạn -->
-                        Tôi muốn không ngừng học hỏi và biến kiến thức thành những kỹ năng thực tế.
-                    </p>
-                </div>
+  const $ = (s) => [...document.querySelectorAll(s)];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const weak = (navigator.hardwareConcurrency || 4) <= 2; // thiết bị yếu: bỏ parallax
 
-                <div class="goal-grid">
-                    <article class="card goal-card">
-                        <h3>📚 Trong học tập</h3>
-                        <p>[Điền mục tiêu học tập, kỳ thi hoặc kiến thức muốn chinh phục.]</p>
-                    </article>
-                    <article class="card goal-card">
-                        <h3>💻 Phát triển kỹ năng</h3>
-                        <p>[Điền kỹ năng muốn cải thiện, chẳng hạn lập trình, giao tiếp hoặc tư duy.]</p>
-                    </article>
-                    <article class="card goal-card">
-                        <h3>🔬 Khám phá</h3>
-                        <p>Lập trình</p>
-                    </article>
-                    <article class="card goal-card">
-                        <h3>🚀 Trong tương lai</h3>
-                        <p>Kỹ sư kỹ thuật vi mạch</p>
-                    </article>
-                </div>
-            </div>
-        </section>
+  /* ---------- Ngôn ngữ: lưu bản tiếng Việt gốc, đổi bằng textContent ---------- */
+  const items = $("[data-en]");
+  items.forEach((el) => (el.dataset.vi = el.textContent));
+  const META = {
+    vi: ["Duy Dang · Student, curious mind, future engineer", "Duy Dang, học sinh THPT Trần Phú, TP. Hồ Chí Minh. Tò mò về toán học, lập trình, vi mạch và kỹ thuật.", "Chân dung Duy Dang", "Cuộn xuống", "Switch to English", "EN"],
+    en: ["Duy Dang · Student, curious mind, future engineer", "Duy Dang, a student at Tran Phu High School, Ho Chi Minh City, curious about mathematics, programming, microchips and engineering.", "Portrait of Duy Dang", "Scroll down", "Chuyển sang tiếng Việt", "VI"],
+  };
+  const btn = document.getElementById("lang");
+  function setLang(l) {
+    items.forEach((el) => (el.textContent = l === "en" ? el.dataset.en : el.dataset.vi));
+    const m = META[l];
+    root.lang = l;
+    document.title = m[0];
+    document.querySelector('meta[name="description"]').content = m[1];
+    document.getElementById("portraitImg").alt = m[2];
+    document.querySelector(".cue").setAttribute("aria-label", m[3]);
+    btn.setAttribute("aria-label", m[4]);
+    btn.textContent = m[5];
+    try { localStorage.setItem("lang", l); } catch (e) {}
+  }
+  let saved = "vi"; // mặc định tiếng Việt
+  try { saved = localStorage.getItem("lang") || "vi"; } catch (e) {}
+  if (saved === "en") setLang("en");
+  btn.addEventListener("click", () => setLang(root.lang === "en" ? "vi" : "en"));
 
-        <!-- ===== THÀNH TÍCH VÀ DỰ ÁN ===== -->
-        <section class="section" id="achievements">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow">Achievements & Projects</p>
-                    <h2>Thành tích và dự án</h2>
-                    <p class="section-description">
-                        Một vài dấu mốc, sản phẩm hoặc trải nghiệm mà tôi muốn lưu lại.
-                    </p>
-                </div>
+  /* ---------- Ảnh chân dung: ẩn ảnh lỗi, giữ khung thay thế ---------- */
+  const fig = document.getElementById("portrait");
+  const img = document.getElementById("portraitImg");
+  const ok = () => fig.classList.add("has-img");
+  img.addEventListener("load", ok);
+  img.addEventListener("error", () => img.remove());
+  if (img.complete && img.naturalWidth > 0) ok();
 
-                <div class="project-grid">
-                    <article class="card">
-                        <span class="project-label">THÀNH TÍCH</span>
-                        <h3>Giải nhì Olympic Toán năm 2021</h3>
-                        <p>
-                            [Mô tả ngắn về thành tích, thời gian đạt được và điều bạn học được.]
-                        </p>
-                    </article>
+  /* ---------- Scroll reveal bằng IntersectionObserver (không lắng nghe scroll) ---------- */
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+  $(".rv,.rvx,.rvz").forEach((el) => io.observe(el));
 
-                    <article class="card">
-                        <span class="project-label">DỰ ÁN</span>
-                        <h3>[Tên dự án của bạn]</h3>
-                        <p>
-                            [Mô tả mục tiêu, vai trò của bạn và kết quả của dự án.]
-                        </p>
-                    </article>
-                </div>
-            </div>
-        </section>
+  /* ---------- Parallax + tiến trình: một listener passive, một rAF, chỉ transform/opacity ---------- */
+  const bar = document.getElementById("bar");
+  const layers = $("[data-speed]").map((el) => ({ el, s: parseFloat(el.dataset.speed), fade: "fade" in el.dataset, mid: 0 }));
+  let vh = innerHeight, max = 1, ticking = false;
 
-        <!-- ===== LIÊN HỆ ===== -->
-        <section class="section" id="contact">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow">Contact</p>
-                    <h2>Kết nối với tôi</h2>
-                    <p class="section-description">
-                        Bạn có thể thêm các liên kết bên dưới để mọi người tìm thấy bạn.
-                    </p>
-                </div>
+  function measure() { // đo layout một lần (khi tải/đổi cỡ), không đo trong lúc cuộn
+    vh = innerHeight;
+    max = Math.max(1, root.scrollHeight - vh);
+    layers.forEach((l) => {
+      const sec = l.el.closest("section,header");
+      l.mid = sec.offsetTop + sec.offsetHeight / 2;
+    });
+  }
+  function frame() {
+    ticking = false;
+    const y = scrollY;
+    bar.style.transform = "scaleX(" + Math.min(1, y / max) + ")";
+    if (reduce || weak) return;
+    layers.forEach((l) => {
+      const d = y + vh / 2 - l.mid;
+      if (Math.abs(d) > vh * 1.6) return; // ngoài tầm nhìn thì bỏ qua
+      l.el.style.transform = "translate3d(0," + (d * l.s).toFixed(1) + "px,0)";
+      if (l.fade) l.el.style.opacity = Math.max(0, 1 - y / (vh * 0.6)).toFixed(3);
+    });
+  }
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
+  addEventListener("resize", () => { measure(); frame(); });
+  addEventListener("load", () => { measure(); frame(); });
+  measure(); frame();
 
-                <div class="card contact-card">
-                    <div>
-                        <h3>Hãy cùng trao đổi và học hỏi!</h3>
-                        <p>Rất vui được kết nối với những người có cùng mối quan tâm.</p>
-                    </div>
-
-                    <div class="contact-links">
-                        <!-- TÙY CHỈNH: thay # và địa chỉ mẫu bằng thông tin thật -->
-                        <a href="mailto:your.email@example.com">Email</a>
-                        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
-                        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ===== CHÂN TRANG ===== -->
-    <footer>
-        <div class="container">
-            <p>© 2026 [Tên của bạn] · Được xây dựng bằng HTML và CSS.</p>
-        </div>
-    </footer>
+  document.getElementById("year").textContent = new Date().getFullYear();
+})();
+</script>
 </body>
 </html>
