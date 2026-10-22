@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Duy Dang · Student, curious mind, future engineer</title>
+<meta name="description" content="Duy Dang, học sinh THPT Trần Phú, TP. Hồ Chí Minh. Tò mò về toán học, lập trình, vi mạch và kỹ thuật.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Duy Dang">
+<meta property="og:description" content="Student · Curious mind · Future engineer">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Ctext x='32' y='43' font-size='30' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3EDD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Be Vietnam Pro: được thiết kế cho tiếng Việt. Nếu không tải được sẽ dùng font hệ thống. -->
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ===== 1. TOKENS: đổi màu, cỡ chữ, khoảng cách tại đây ===== */
+:root{
+  --bg:#fff; --fg:#0a0a0a; --mut:#666; --line:#e4e4e4; --soft:#f4f4f4;
+  --dbg:#0a0a0a; --dfg:#f5f5f5; --dmut:#a6a6a6; --dline:#2a2a2a;
+  --gut:clamp(1.25rem,5vw,3rem); --pad:clamp(5rem,13vw,10rem);
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --font:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.65;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid currentColor;outline-offset:4px;border-radius:2px}
+.wrap{max-width:1080px;margin:0 auto}
+section{padding:var(--pad) var(--gut)}
+h2{font-weight:800;letter-spacing:-.03em;line-height:1.08;font-size:clamp(1.9rem,6vw,3.6rem);max-width:18ch}
+.dark{background:var(--dbg);color:var(--dfg)}
+.dark .mut{color:var(--dmut)}
+.mut{color:var(--mut)}
+
+/* ===== 2. CHROME TỐI GIẢN: thanh tiến trình + nút đổi ngôn ngữ ===== */
+.bar{position:fixed;inset:0 0 auto 0;height:2px;background:var(--fg);transform:scaleX(0);transform-origin:0 50%;z-index:30;mix-blend-mode:difference}
+.lang{position:fixed;top:max(.9rem,env(safe-area-inset-top));right:var(--gut);z-index:30;min-width:44px;min-height:44px;padding:0 1rem;border:1px solid currentColor;border-radius:99px;background:rgba(255,255,255,.85);color:#0a0a0a;font:600 .85rem var(--font);cursor:pointer;transition:background .2s,color .2s}
+.lang:hover{background:#0a0a0a;color:#fff}
+
+/* ===== 3. HERO ===== */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(1.2rem,4vh,2.5rem);padding:5.5rem var(--gut) 5rem;overflow:hidden;text-align:center}
+.layer{position:absolute;inset:0;margin:auto;pointer-events:none;will-change:transform}
+.ring{border:1px solid var(--line);border-radius:50%}
+.r1{width:min(130vw,980px);height:min(130vw,980px)}
+.r2{width:min(86vw,640px);height:min(86vw,640px);border-color:#d2d2d2}
+.gridbg{width:100%;height:100%;background-image:linear-gradient(var(--soft) 1px,transparent 1px),linear-gradient(90deg,var(--soft) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(circle at 50% 55%,#000,transparent 65%);mask-image:radial-gradient(circle at 50% 55%,#000,transparent 65%)}
+.hero-top{position:relative;z-index:2;will-change:transform,opacity}
+.name{font-weight:800;letter-spacing:-.055em;line-height:.9;font-size:clamp(3.6rem,17vw,11.5rem)}
+.tag{margin-top:1.1rem;font-weight:300;color:var(--mut);font-size:clamp(.95rem,2.6vw,1.3rem);letter-spacing:.01em}
+.portrait{position:relative;z-index:1;width:min(72vw,380px);aspect-ratio:4/5;will-change:transform}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;-webkit-mask-image:linear-gradient(#000 78%,transparent);mask-image:linear-gradient(#000 78%,transparent)}
+.ph{position:absolute;inset:0;display:grid;place-items:center;border-radius:999px 999px 18px 18px;background:linear-gradient(#f1f1f1,#fafafa);border:1px solid var(--line)}
+.ph svg{width:70%;height:auto;color:#cfcfcf}
+.ph b{position:absolute;bottom:14%;font-weight:800;font-size:clamp(2rem,8vw,3rem);letter-spacing:-.05em;color:#bdbdbd}
+.has-img .ph{display:none}
+.cue{position:absolute;bottom:1.4rem;left:50%;margin-left:-22px;width:44px;height:44px;display:grid;place-items:center;text-decoration:none;z-index:2}
+.cue span{display:block;width:1px;height:34px;background:var(--fg);transform-origin:top;animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{0%{transform:scaleY(0)}60%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+
+/* ===== 4. ABOUT ===== */
+.about h2{max-width:20ch;font-size:clamp(2.2rem,8vw,5.2rem)}
+.about .lines{margin-top:clamp(2.5rem,7vw,5rem);display:grid;gap:1.6rem;max-width:34rem;margin-left:auto}
+.about .lines p{font-size:clamp(1.05rem,2.4vw,1.3rem);font-weight:300}
+.about .lines p:first-child{font-weight:600}
+
+/* ===== 5. PERSONALITY: danh sách typographic, không dùng card ===== */
+.traits{margin-top:clamp(2.5rem,6vw,4rem);border-bottom:1px solid var(--line)}
+.trait{display:grid;gap:.4rem 2rem;padding:1.6rem 0;border-top:1px solid var(--line);transition:padding-left .5s var(--ease)}
+.trait h3{font-weight:800;letter-spacing:-.04em;line-height:1;font-size:clamp(2rem,7vw,3.8rem)}
+.trait p{color:var(--mut);max-width:34rem;align-self:end}
+@media(hover:hover){.trait:hover{padding-left:1rem}}
+@media(min-width:760px){.trait{grid-template-columns:1fr 1fr;align-items:end}}
+
+/* ===== 6. LEARNING ===== */
+.learn .intro{margin-top:1.5rem;max-width:36rem;color:var(--mut);font-size:1.08rem}
+.topics{margin-top:clamp(3rem,7vw,5rem);display:grid;gap:clamp(2.5rem,6vw,4rem)}
+.topic{display:grid;gap:.6rem;max-width:30rem;padding-left:1.2rem;border-left:2px solid var(--fg)}
+.topic h3{font-size:clamp(1.3rem,3.4vw,1.8rem);font-weight:600;letter-spacing:-.02em;line-height:1.25}
+.topic p{color:var(--mut)}
+@media(min-width:760px){.topic:nth-child(even){margin-left:auto}}
+
+
+/* ===== ẢNH PHỤ: chuyển xám để hợp phong cách trắng–đen (xóa filter nếu muốn giữ màu) ===== */
+.pic{display:block;width:100%;height:auto;filter:grayscale(1) contrast(1.05)}
+.about-grid{margin-top:clamp(2.5rem,7vw,5rem);display:grid;gap:2.5rem;align-items:end}
+.about-grid figure{width:min(62vw,280px)}
+.about-grid .lines{margin-top:0}
+@media(min-width:760px){.about-grid{grid-template-columns:minmax(220px,.8fr) 1.2fr;gap:clamp(2rem,6vw,5rem)}.about-grid figure{width:100%;max-width:340px}}
+.about-grid figure{-webkit-mask-image:linear-gradient(#000 86%,transparent);mask-image:linear-gradient(#000 86%,transparent)}
+.split{margin-top:clamp(3rem,7vw,5rem);display:grid;gap:2.5rem}
+.split .topics{margin-top:0}
+.split figure{width:min(60vw,260px)}
+@media(min-width:900px){.split{grid-template-columns:1.2fr .8fr;gap:4rem;align-items:start}.split .topics{grid-column:1;grid-row:1}.split figure{grid-column:2;grid-row:1;width:100%;max-width:360px;justify-self:end;position:sticky;top:6rem}.split .topic:nth-child(even){margin-left:0}}
+
+/* ===== THỜI KHÓA BIỂU ===== */
+.tt-sec{background:var(--soft)}
+.tt-sec .intro{margin-top:1.5rem;max-width:36rem;color:var(--mut);font-size:1.08rem}
+.ttwrap{margin-top:clamp(2.5rem,6vw,4rem);overflow-x:auto;border:1px solid var(--fg);background:#fff}
+.tt{width:100%;min-width:560px;border-collapse:collapse;text-align:center;font-size:clamp(.85rem,2vw,1rem)}
+.tt th,.tt td{border:1px solid var(--line);padding:.85rem .4rem;height:3.1rem}
+.tt thead th{font-weight:800;border-bottom:1px solid var(--fg)}
+.tt .ses th{text-align:left;padding:1.1rem 1rem;font-size:clamp(1.1rem,3vw,1.5rem);font-weight:800;letter-spacing:-.03em;background:var(--soft);border-left:0;border-right:0}
+.tt td{transition:background .25s,color .25s}
+.tt td:hover{background:var(--fg);color:#fff}
+.tt .today{background:#ebebeb;font-weight:600}
+.tt thead th.today{background:var(--fg);color:#fff}
+.tt-note{margin-top:1.2rem;color:var(--mut);font-size:.9rem}
+.js .tt td{opacity:0;transform:translateY(10px)}
+.js .tt.in td{opacity:1;transform:none;transition:opacity .6s var(--ease) calc(var(--r)*70ms + var(--c)*40ms),transform .7s var(--ease) calc(var(--r)*70ms + var(--c)*40ms),background .25s,color .25s}
+@media(prefers-reduced-motion:reduce){.js .tt td,.js .tt.in td{opacity:1;transform:none;transition:background .25s,color .25s}}
+
+/* ===== 7. INTERESTS (nền đen để tạo nhịp tương phản) ===== */
+.cols{margin-top:clamp(3rem,7vw,5rem);display:grid;gap:clamp(3rem,6vw,4rem)}
+.col svg{width:100%;max-width:260px;height:auto;display:block;margin-bottom:1.5rem;color:var(--dfg)}
+.col h3{font-size:clamp(2rem,5vw,2.8rem);font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:.8rem}
+.col p{color:var(--dmut);max-width:22rem}
+.draw *{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.draw .dot{fill:currentColor;stroke:none}
+@media(min-width:820px){.cols{grid-template-columns:repeat(3,1fr);gap:3rem}}
+
+/* ===== 8. GOALS ===== */
+.goals{position:relative;overflow:hidden}
+.goals .big{position:absolute;right:-6vw;top:8%;font-weight:800;font-size:clamp(14rem,48vw,38rem);line-height:.8;letter-spacing:-.08em;color:transparent;-webkit-text-stroke:1px var(--line);user-select:none;pointer-events:none;will-change:transform}
+.goals .wrap{position:relative}
+.goal-list{margin-top:clamp(2.5rem,6vw,4rem);display:grid;gap:clamp(1.4rem,3.5vw,2.4rem)}
+.goal-list p{font-weight:600;letter-spacing:-.03em;line-height:1.2;font-size:clamp(1.5rem,4.8vw,2.9rem);max-width:22ch}
+.goals .note{margin-top:3rem;color:var(--mut);font-weight:300}
+
+/* ===== 9. PROJECTS + CONTACT ===== */
+.projects{background:var(--soft)}
+.projects p{margin-top:1.6rem;max-width:34rem;color:var(--mut);font-size:1.08rem}
+.contact{text-align:center}
+.contact h2{margin:0 auto;max-width:12ch;font-size:clamp(2.6rem,10vw,6.5rem)}
+.contact p{margin:1.6rem auto 0;max-width:30rem;color:var(--mut);font-size:1.08rem}
+.contact .loc{margin-top:2rem;font-weight:600;color:var(--fg)}
+footer{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;padding:1.5rem var(--gut);border-top:1px solid var(--line);font-size:.9rem;color:var(--mut)}
+footer a,footer button{min-height:44px;display:inline-flex;align-items:center;padding:0 .2rem;background:none;border:0;font:inherit;color:var(--fg);cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+
+/* ===== 10. SCROLL REVEAL: chỉ bật khi JS chạy (không JS vẫn đọc được) ===== */
+.js .rv,.js .rvx,.js .rvz{opacity:0;transition:opacity .9s var(--ease) var(--d,0s),transform 1.1s var(--ease) var(--d,0s)}
+.js .rv{transform:translateY(28px)}
+.js .rvx{transform:translateX(-36px)}
+.js .rvz{transform:scale(.94)}
+.js .in{opacity:1;transform:none}
+.js .draw *{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s var(--ease) .2s}
+.js .in .draw *,.js .draw.in *{stroke-dashoffset:0}
+.js .intro-seq{animation:seq 1.2s var(--ease) both}
+@keyframes seq{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* ===== 11. GIẢM CHUYỂN ĐỘNG: nội dung và bố cục vẫn đầy đủ ===== */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .rv,.js .rvx,.js .rvz{opacity:1;transform:none;transition:none}
+  .js .draw *{stroke-dashoffset:0;transition:none}
+  .js .intro-seq,.cue span{animation:none}
+  .cue span{transform:none}
+  .trait{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="bar" id="bar" aria-hidden="true"></div>
+<button class="lang" id="lang" type="button" aria-label="Switch to English">EN</button>
+
+<main>
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="layer" data-speed="0.14" aria-hidden="true"><div class="gridbg"></div></div>
+  <div class="layer ring r1" data-speed="-0.06" aria-hidden="true"></div>
+  <div class="layer ring r2" data-speed="0.05" aria-hidden="true"></div>
+
+  <div class="hero-top intro-seq" data-fade data-speed="-0.12">
+    <h1 class="name">Duy Dang</h1>
+    <p class="tag">Student · Curious mind · Future engineer</p>
+  </div>
+
+  <!-- Ảnh chân dung: ảnh đã tách nền: assets/images/portrait.webp.
+       Chưa có ảnh thì khung phía sau tự hiển thị, không lộ ảnh lỗi. -->
+  <figure class="portrait intro-seq" id="portrait" data-speed="-0.03" style="animation-delay:.25s">
+    <div class="ph" aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1"><circle cx="100" cy="100" r="92"/><circle cx="100" cy="100" r="64"/><circle cx="100" cy="100" r="36"/><path d="M8 100h184M100 8v184"/></svg>
+      <b>DD</b>
+    </div>
+    <img id="portraitImg" src="assets/images/portrait.webp" alt="Chân dung Duy Dang" width="800" height="1000" decoding="async">
+  </figure>
+
+  <a class="cue" href="#about" aria-label="Cuộn xuống" data-en-label="Scroll down"><span></span></a>
+</header>
+
+<!-- ===== ABOUT ===== -->
+<section class="about" id="about" aria-labelledby="t-about">
+  <div class="wrap">
+    <h2 id="t-about" class="rv" data-en="I understand how everything works. Just not you.">Hiểu cách mọi thứ vận hành nhưng chưa hiểu được em.</h2>
+    <div class="about-grid">
+      <figure class="rvz"><img class="pic" src="assets/images/about.webp" alt="Duy Dang" width="518" height="788" loading="lazy" decoding="async"></figure>
+      <div class="lines">
+      <p class="rvx" data-en="I like opening things up and asking: why does this work?">Mình thích mở một thứ ra và hỏi: vì sao nó chạy được?</p>
+      <p class="rvx" style="--d:.15s" data-en="A proof, a line of code, a chip. Each one is a puzzle with an answer waiting to be found.">Một phép chứng minh, một dòng code, một con chip. Mỗi thứ là một câu đố có lời giải đang chờ được tìm ra.</p>
+      <p class="rvx mut" style="--d:.3s" data-en="There is still so much I don’t know. Maybe that’s why I keep going.">Vẫn còn rất nhiều điều mình chưa biết. Có lẽ vì thế mà mình chưa dừng lại.</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PERSONALITY ===== -->
+<section id="personality" aria-labelledby="t-pers">
+  <div class="wrap">
+    <h2 id="t-pers" class="rv" data-en="A few things about how I think">Một vài điều về cách mình nghĩ</h2>
+    <div class="traits">
+      <div class="trait rv"><h3 data-en="Logic">Logic</h3><p data-en="I like things with clear reasons, and I believe most problems can be broken down and solved.">Mình thích mọi thứ có lý do rõ ràng, và tin rằng phần lớn vấn đề có thể chia nhỏ để giải.</p></div>
+      <div class="trait rv"><h3 data-en="Curious">Ham khám phá</h3><p data-en="When I meet something I don’t understand, I want to see how it works before I accept it.">Gặp điều chưa hiểu, mình muốn biết nó hoạt động ra sao trước khi chấp nhận nó.</p></div>
+      <div class="trait rv"><h3 data-en="Creative">Sáng tạo</h3><p data-en="For the same problem, I try to find one more way of looking at it.">Cùng một bài toán, mình luôn thử tìm thêm một cách nhìn khác.</p></div>
+      <div class="trait rv"><h3 data-en="Energetic">Năng động</h3><p data-en="Football, cycling and running keep me moving after long hours of thinking.">Bóng đá, đạp xe và chạy bộ giúp mình giữ nhịp sau những giờ ngồi suy nghĩ.</p></div>
+      <div class="trait rv"><h3 data-en="Disciplined">Kỷ luật</h3><p data-en="I believe progress comes from small things done steadily, every day.">Mình tin tiến bộ đến từ những việc nhỏ làm đều đặn mỗi ngày.</p></div>
+      <div class="trait rv"><h3 data-en="Calm">Điềm tĩnh</h3><p data-en="When a problem gets hard, I slow down and look closer instead of rushing.">Khi bài toán khó, mình chậm lại và nhìn kỹ hơn thay vì vội vàng.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LEARNING ===== -->
+<section class="learn" id="learning" aria-labelledby="t-learn">
+  <div class="wrap">
+    <h2 id="t-learn" class="rv" data-en="Learning, still exploring">Đang học, đang tìm hiểu</h2>
+    <p class="intro rv" data-en="I’m studying at Tran Phu High School in Ho Chi Minh City. These are the areas I’m learning, not ones I’ve mastered.">Mình đang học tại THPT Trần Phú, TP. Hồ Chí Minh. Đây là những lĩnh vực mình đang học hỏi, chưa phải điều mình đã thành thạo.</p>
+    <div class="split">
+      <figure class="rvz"><img class="pic" src="assets/images/learning.webp" alt="Duy Dang" width="490" height="613" loading="lazy" decoding="async"></figure>
+    <div class="topics">
+      <article class="topic rvx"><h3 data-en="Mathematics and logical thinking">Toán học và tư duy logic</h3><p data-en="Where I practise careful reasoning: state assumptions, test them, and accept when I’m wrong.">Nơi mình luyện cách suy luận chặt chẽ: đặt giả thiết, kiểm tra, và chấp nhận khi mình sai.</p></article>
+      <article class="topic rvx"><h3 data-en="Programming">Lập trình</h3><p data-en="Turning ideas into steps a computer can follow, and learning to hunt bugs calmly.">Biến ý tưởng thành các bước máy tính có thể làm theo, và học cách tìm lỗi một cách bình tĩnh.</p></article>
+      <article class="topic rvx"><h3 data-en="Microchips and semiconductors">Vi mạch và bán dẫn</h3><p data-en="Curious how tiny components can process information. I’m starting from the fundamentals.">Tò mò về cách những linh kiện rất nhỏ có thể xử lý thông tin. Mình đang bắt đầu từ các khái niệm nền tảng.</p></article>
+      <article class="topic rvx"><h3 data-en="Engineering and systems">Kỹ thuật và hệ thống</h3><p data-en="Seeing a device as parts working together, then asking what each part does.">Nhìn một thiết bị như tập hợp các phần phối hợp với nhau, rồi hỏi từng phần làm gì.</p></article>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THỜI KHÓA BIỂU (bảng HTML thật, không phải ảnh) ===== -->
+<section class="tt-sec" id="timetable" aria-labelledby="t-tt">
+  <div class="wrap">
+    <h2 id="t-tt" class="rv" data-en="Weekly timetable">Thời khóa biểu</h2>
+    <p class="intro rv" data-en="My school week in class A10, first semester of 2026–2027, in effect from 7 September 2026.">Một tuần học của mình ở lớp A10, học kỳ 1 năm học 2026–2027, áp dụng từ ngày 07/09/2026.</p>
+    <div class="ttwrap rv" role="region" aria-label="Thời khóa biểu" tabindex="0">
+      <table class="tt">
+        <thead><tr><th scope="col">Thứ 2</th><th scope="col">Thứ 3</th><th scope="col">Thứ 4</th><th scope="col">Thứ 5</th><th scope="col">Thứ 6</th></tr></thead>
+        <tbody>
+        <tr class="ses"><th colspan="5" scope="colgroup">Buổi sáng</th></tr>
+        <tr><td>CC-GDTT</td><td>GDTC</td><td>GDĐP</td><td>Anh</td><td>Tin</td></tr>
+        <tr><td>HĐTN</td><td>GDTC</td><td>Toán</td><td>Anh</td><td>Tin</td></tr>
+        <tr><td>Hóa</td><td>CĐ Hóa</td><td>Toán</td><td>Địa</td><td>TN-HN</td></tr>
+        <tr><td>Hóa</td><td>CĐ Lý</td><td>Anh</td><td>Địa</td><td>TN-HN</td></tr>
+        <tr class="ses"><th colspan="5" scope="colgroup">Buổi chiều</th></tr>
+        <tr><td>Văn</td><td>Sử</td><td>Văn</td><td>Lý</td><td>CĐ Toán</td></tr>
+        <tr><td>Văn</td><td>Sử</td><td>Văn B2</td><td>Lý</td><td>Toán B2</td></tr>
+        <tr><td></td><td>Toán</td><td>AnhNNG</td><td></td><td>AnhNNG</td></tr>
+        <tr><td></td><td>GDQP&amp;AN</td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tt-note" data-en="Some subjects keep the school’s own abbreviations. Today’s column is highlighted.">Một số môn giữ nguyên chữ viết tắt của trường. Cột của hôm nay được làm nổi bật.</p>
+  </div>
+</section>
+
+<!-- ===== INTERESTS ===== -->
+<section class="dark" id="interests" aria-labelledby="t-int">
+  <div class="wrap">
+    <h2 id="t-int" class="rv" data-en="Think, build, move">Nghĩ, làm, vận động</h2>
+    <div class="cols">
+      <div class="col rvz">
+        <svg class="draw" viewBox="0 0 200 140" aria-hidden="true"><path pathLength="1" d="M20 110 L70 40 L120 80 L180 20"/><path pathLength="1" d="M20 125h160M20 125V15"/><circle class="dot" cx="70" cy="40" r="3.5"/><circle class="dot" cx="120" cy="80" r="3.5"/><circle class="dot" cx="180" cy="20" r="3.5"/></svg>
+        <h3>THINK</h3><p data-en="Mathematics, logic and problem solving. Where everything starts with a question.">Toán học, logic và giải quyết vấn đề. Nơi mọi thứ bắt đầu bằng một câu hỏi.</p>
+      </div>
+      <div class="col rvz" style="--d:.15s">
+        <svg class="draw" viewBox="0 0 200 140" aria-hidden="true"><rect pathLength="1" x="70" y="40" width="60" height="60" rx="4"/><path pathLength="1" d="M85 40V15H20M100 40V10M115 40V25h65M130 70h50M130 85h30v35h20M70 70H20M70 85H35v35H15M85 100v25h-40M115 100v30"/><circle class="dot" cx="20" cy="15" r="3"/><circle class="dot" cx="180" cy="25" r="3"/><circle class="dot" cx="180" cy="120" r="3"/></svg>
+        <h3>BUILD</h3><p data-en="Programming, microchips and engineering. Where ideas meet reality.">Lập trình, vi mạch và kỹ thuật. Nơi ý tưởng được thử với thực tế.</p>
+      </div>
+      <div class="col rvz" style="--d:.3s">
+        <svg class="draw" viewBox="0 0 200 140" aria-hidden="true"><path pathLength="1" d="M10 120C50 120 50 30 100 30S150 110 190 110"/><path pathLength="1" d="M10 130h180" opacity=".5"/><circle class="dot" cx="100" cy="30" r="3.5"/><circle class="dot" cx="190" cy="110" r="3.5"/></svg>
+        <h3>MOVE</h3><p data-en="Football, cycling and running. Where the mind rests and the body speaks.">Đá bóng, đạp xe và chạy bộ. Nơi đầu óc được nghỉ và cơ thể lên tiếng.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GOALS ===== -->
+<section class="goals" id="goals" aria-labelledby="t-goal">
+  <div class="big" data-speed="0.18" aria-hidden="true">?</div>
+  <div class="wrap">
+    <h2 id="t-goal" class="rv" data-en="Where I’m heading">Hướng đi phía trước</h2>
+    <div class="goal-list">
+      <p class="rvx" data-en="Understand the principles, not just use the tools.">Hiểu sâu nguyên lý, không chỉ biết dùng công cụ.</p>
+      <p class="rvx" data-en="Grow my programming and problem-solving.">Rèn khả năng lập trình và giải quyết vấn đề.</p>
+      <p class="rvx" data-en="Explore how software, hardware and engineering connect.">Khám phá mối liên hệ giữa phần mềm, phần cứng và kỹ thuật.</p>
+      <p class="rvx" data-en="Turn knowledge into things people can actually use.">Biến kiến thức thành sản phẩm có thể dùng được.</p>
+    </div>
+    <p class="note rv" data-en="These are directions I’m working toward, not things already done.">Đây là những điều mình đang hướng tới, chưa phải điều đã hoàn thành.</p>
+  </div>
+</section>
+
+<!-- ===== PROJECTS: chưa có dữ liệu dự án thật nên không tạo card hay liên kết giả ===== -->
+<section class="projects" id="projects" aria-labelledby="t-proj">
+  <div class="wrap">
+    <h2 id="t-proj" class="rv" data-en="Projects">Dự án</h2>
+    <p class="rv" data-en="Projects will appear here once they’re clear enough to share, with real goals, roles and status. None have been published yet.">Các dự án sẽ xuất hiện ở đây khi đủ rõ ràng để chia sẻ, kèm mục tiêu, vai trò và trạng thái thật. Hiện chưa có dự án nào được công bố.</p>
+  </div>
+</section>
+
+<!-- ===== CONTACT: chưa có email/mạng xã hội thật nên chỉ giữ lời mời ===== -->
+<section class="contact" id="contact" aria-labelledby="t-contact">
+  <div class="wrap">
+    <h2 id="t-contact" class="rv" data-en="Let’s talk">Cùng trao đổi</h2>
+    <p class="rv" data-en="I’m always glad to exchange knowledge and hear new ideas.">Mình luôn vui khi được trao đổi kiến thức và nghe những ý tưởng mới.</p>
+    <p class="loc rv" data-en="Ho Chi Minh City, Vietnam">TP. Hồ Chí Minh, Việt Nam</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <span>© <span id="year">2026</span> Duy Dang</span>
+  <a href="#top" data-en="Back to top">Về đầu trang</a>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js"); // bật các trạng thái ẩn của reveal (không JS thì nội dung vẫn hiện)
+
+  const $ = (s) => [...document.querySelectorAll(s)];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const weak = (navigator.hardwareConcurrency || 4) <= 2; // thiết bị yếu: bỏ parallax
+
+  let io0;
+  /* ---------- Thời khóa biểu: dịch tên môn, tô cột hôm nay, trễ animation theo hàng/cột ---------- */
+  const TT = { "Thứ 2":"Mon","Thứ 3":"Tue","Thứ 4":"Wed","Thứ 5":"Thu","Thứ 6":"Fri","Buổi sáng":"Morning","Buổi chiều":"Afternoon","Toán":"Math","Hóa":"Chemistry","Lý":"Physics","Anh":"English","Địa":"Geography","Tin":"IT","Văn":"Literature","Sử":"History","CĐ Hóa":"Chemistry focus","CĐ Lý":"Physics focus","CĐ Toán":"Math focus","Văn B2":"Literature B2","Toán B2":"Math B2" };
+  const ttEl = document.querySelector(".tt");
+  $(".tt th,.tt td").forEach((el) => { const k = el.textContent.trim(); if (TT[k]) el.dataset.en = TT[k]; });
+  const today = new Date().getDay() - 1; // Thứ 2 = 0 ... Thứ 6 = 4 (cuối tuần: không tô)
+  [...ttEl.rows].forEach((tr, r) => [...tr.cells].forEach((c, i) => {
+    c.style.setProperty("--r", r); c.style.setProperty("--c", i);
+    if (tr.cells.length === 5 && i === today) c.classList.add("today");
+  }));
+  io0 = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io0.disconnect())), { threshold: 0.2 });
+  io0.observe(ttEl);
+
+  /* ---------- Ngôn ngữ: lưu bản tiếng Việt gốc, đổi bằng textContent ---------- */
+  const items = $("[data-en]");
+  items.forEach((el) => (el.dataset.vi = el.textContent));
+  const META = {
+    vi: ["Duy Dang · Student, curious mind, future engineer", "Duy Dang, học sinh THPT Trần Phú, TP. Hồ Chí Minh. Tò mò về toán học, lập trình, vi mạch và kỹ thuật.", "Chân dung Duy Dang", "Cuộn xuống", "Switch to English", "EN"],
+    en: ["Duy Dang · Student, curious mind, future engineer", "Duy Dang, a student at Tran Phu High School, Ho Chi Minh City, curious about mathematics, programming, microchips and engineering.", "Portrait of Duy Dang", "Scroll down", "Chuyển sang tiếng Việt", "VI"],
+  };
+  const btn = document.getElementById("lang");
+  function setLang(l) {
+    items.forEach((el) => (el.textContent = l === "en" ? el.dataset.en : el.dataset.vi));
+    const m = META[l];
+    root.lang = l;
+    document.title = m[0];
+    document.querySelector('meta[name="description"]').content = m[1];
+    document.getElementById("portraitImg").alt = m[2];
+    document.querySelector(".ttwrap").setAttribute("aria-label", l === "en" ? "Weekly timetable" : "Thời khóa biểu");
+    document.querySelector(".cue").setAttribute("aria-label", m[3]);
+    btn.setAttribute("aria-label", m[4]);
+    btn.textContent = m[5];
+    try { localStorage.setItem("lang", l); } catch (e) {}
+  }
+  let saved = "vi"; // mặc định tiếng Việt
+  try { saved = localStorage.getItem("lang") || "vi"; } catch (e) {}
+  if (saved === "en") setLang("en");
+  btn.addEventListener("click", () => setLang(root.lang === "en" ? "vi" : "en"));
+
+  /* ---------- Ảnh chân dung: ẩn ảnh lỗi, giữ khung thay thế ---------- */
+  const fig = document.getElementById("portrait");
+  const img = document.getElementById("portraitImg");
+  const ok = () => fig.classList.add("has-img");
+  img.addEventListener("load", ok);
+  img.addEventListener("error", () => img.remove());
+  if (img.complete && img.naturalWidth > 0) ok();
+
+  /* ---------- Scroll reveal bằng IntersectionObserver (không lắng nghe scroll) ---------- */
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+  $(".rv,.rvx,.rvz").forEach((el) => io.observe(el));
+
+  /* ---------- Parallax + tiến trình: một listener passive, một rAF, chỉ transform/opacity ---------- */
+  const bar = document.getElementById("bar");
+  const layers = $("[data-speed]").map((el) => ({ el, s: parseFloat(el.dataset.speed), fade: "fade" in el.dataset, mid: 0 }));
+  let vh = innerHeight, max = 1, ticking = false;
+
+  function measure() { // đo layout một lần (khi tải/đổi cỡ), không đo trong lúc cuộn
+    vh = innerHeight;
+    max = Math.max(1, root.scrollHeight - vh);
+    layers.forEach((l) => {
+      const sec = l.el.closest("section,header");
+      l.mid = sec.offsetTop + sec.offsetHeight / 2;
+    });
+  }
+  function frame() {
+    ticking = false;
+    const y = scrollY;
+    bar.style.transform = "scaleX(" + Math.min(1, y / max) + ")";
+    if (reduce || weak) return;
+    layers.forEach((l) => {
+      const d = y + vh / 2 - l.mid;
+      if (Math.abs(d) > vh * 1.6) return; // ngoài tầm nhìn thì bỏ qua
+      l.el.style.transform = "translate3d(0," + (d * l.s).toFixed(1) + "px,0)";
+      if (l.fade) l.el.style.opacity = Math.max(0, 1 - y / (vh * 0.6)).toFixed(3);
+    });
+  }
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
+  addEventListener("resize", () => { measure(); frame(); });
+  addEventListener("load", () => { measure(); frame(); });
+  measure(); frame();
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
